@@ -7,7 +7,12 @@ const clearButton=document.querySelector("#clearButton");
 
 runEvents();
 function runEvents(){
-    form.addEventListener("submit",addTodo)
+
+    form.addEventListener("submit",addTodo);
+
+    clearButton.addEventListener("click",cleatTodos);
+
+    todoList.addEventListener("click",deleteTodo);
 }
 
 function addTodo(e){
@@ -18,13 +23,14 @@ function addTodo(e){
     }else{
         addTodoToUI(inputText);
     }
+    addInput.value="";
     e.preventDefault();
 }
 
 
 //Add to UI
 
-function addTodoToUI(){
+function addTodoToUI(newTodo){
     const li=document.createElement("li");
     li.className="list-group-item";
     li.textContent=newTodo;
@@ -32,12 +38,15 @@ function addTodoToUI(){
     const a=document.createElement("a");
     a.href="#";
     a.className="delete-item";
-
-
-    const i=document.createElement("i");
-    i.className="removeTodo";
-
-    a.appendChild(i);
+    a.textContent="Delete";
     li.appendChild(a);
-    todoList.appendChild(li)
-;}
+
+    todoList.appendChild(li);
+   
+}
+
+function deleteTodo(e) {
+    if (e.target.classList.contains("delete-item")) {
+      e.target.parentElement.remove(); // Remove the parent <li>
+    }
+  }
